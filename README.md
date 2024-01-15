@@ -6,17 +6,17 @@
 ## Quick Usage:
 ### Install:
 ```shell
-pip install zeus-utility
+pip install zeus_utility
 # or 
 pip install git+https://github.com/zeuscsc/zeus_utility.git
 ```
 ### Usage
 ```python
+from parallel_executor import QueueExecutor
 def print_a_plus_b(a,b):
     print(a+b)
-queue=[]
+executor=QueueExecutor(threads_count=5)
 for i in range(10):
-    queue.append((print_a_plus_b,{"a":i,"b":i}))
-execute_queue
-
+    executor.add_task(print_a_plus_b,a=i,b=i)
+executor.execute()
 ```

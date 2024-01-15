@@ -6,12 +6,12 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 NAME = 'zeus_utility'
-DESCRIPTION = 'Just a simple mediator for different LLM models.'
+DESCRIPTION = 'Just some useful utilities Zeus will use in almost every projects.'
 URL = 'https://github.com/zeuscsc/zeus_utility.git'
 EMAIL = 'zeuscsc@gmail.com'
 AUTHOR = 'Zeus Chiu'
 REQUIRES_PYTHON = '>=3.9.0'
-VERSION = '0.0.2'
+VERSION = '0.0.3'
 
 with open('requirements.txt') as f:
     required_packages = f.readlines()
