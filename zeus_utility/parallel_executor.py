@@ -7,7 +7,7 @@ class Queue:
     kawrgs:dict=None
 
 class QueueExecutor(list[Queue]):
-    def __init__(self,threads_count:int=5,slience=True,waiting_time=0):
+    def __init__(self,threads_count:int=5,slience=True,waiting_time=0,use_try_catch=False):
         super().__init__()
         self.threads_count=threads_count
         self.slience=slience
@@ -17,14 +17,21 @@ class QueueExecutor(list[Queue]):
         super().append((task,kwargs))
 
     def execute(self):
-        execute_queue(self,threads_count=self.threads_count,slience=self.slience,waiting_time=self.waiting_time)
+        if self.threads_count==1:
+            for task in self:
+                task[0](**task[1])
+        elif self.threads_count>1:
+            execute_queue(self,threads_count=self.threads_count,slience=self.slience,waiting_time=self.waiting_time)
     pass
-def execute_queue(iterator:Iterator,threads_count:int=10,slience=True,waiting_time=0):
+def execute_queue(iterator:Iterator,threads_count:int=10,slience=True,waiting_time=0,use_try_catch=False):
     def run_task(task:Callable,*args, **kwargs):
-        # try:
+        if not use_try_catch:
             task(*args, **kwargs)
-        # except Exception as e:
-        #     print(e)
+        else:
+            try:
+                task(*args, **kwargs)
+            except Exception as e:
+                print(e)
     from queue import Queue
     from threading import Thread
     WORKERS_COUNT=threads_count
