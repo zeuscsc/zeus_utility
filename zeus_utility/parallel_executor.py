@@ -12,6 +12,7 @@ class QueueExecutor(list[Queue]):
         self.threads_count=threads_count
         self.slience=slience
         self.waiting_time=waiting_time
+        self.use_try_catch=use_try_catch
         pass
     def add_task(self,task:Callable,**kwargs):
         super().append((task,kwargs))
@@ -21,7 +22,7 @@ class QueueExecutor(list[Queue]):
             for task in self:
                 task[0](**task[1])
         elif self.threads_count>1:
-            execute_queue(self,threads_count=self.threads_count,slience=self.slience,waiting_time=self.waiting_time)
+            execute_queue(self,threads_count=self.threads_count,slience=self.slience,waiting_time=self.waiting_time,use_try_catch=self.use_try_catch)
     pass
 def execute_queue(iterator:Iterator,threads_count:int=10,slience=True,waiting_time=0,use_try_catch=False):
     def run_task(task:Callable,*args, **kwargs):
