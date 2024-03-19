@@ -68,6 +68,8 @@ def execute_queue(iterator:Iterator,threads_count:int=10,slience=True,waiting_ti
                 if not slience:
                     print(f"Task done.")
                 queue.task_done()
+                if progress_bar is not None:
+                    progress_bar.update(1)
             except KeyboardInterrupt:
                 print("Main process terminated externally.")
                 break
@@ -79,8 +81,6 @@ def execute_queue(iterator:Iterator,threads_count:int=10,slience=True,waiting_ti
     def start():
         for row in iterator:
             queue.put(row)
-            if progress_bar is not None:
-                progress_bar.update(1)
             time.sleep(waiting_time)
         queue.join()
     return start()
