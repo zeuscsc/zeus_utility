@@ -1,5 +1,6 @@
 from typing import Callable, Iterator
 import time
+from tqdm import tqdm
 HEADLESS=True
 
 class Queue:
@@ -17,14 +18,14 @@ class QueueExecutor(list[Queue]):
     def add_task(self,task:Callable,**kwargs):
         super().append((task,kwargs))
 
-    def execute(self):
+    def execute(self,progress_bar=None):
         if self.threads_count==1:
             for task in self:
                 task[0](**task[1])
         elif self.threads_count>1:
-            execute_queue(self,threads_count=self.threads_count,slience=self.slience,waiting_time=self.waiting_time,use_try_catch=self.use_try_catch)
+            execute_queue(self,threads_count=self.threads_count,slience=self.slience,waiting_time=self.waiting_time,use_try_catch=self.use_try_catch,progress_bar=progress_bar)
     pass
-def execute_queue(iterator:Iterator,threads_count:int=10,slience=True,waiting_time=0,use_try_catch=False):
+def execute_queue(iterator:Iterator,threads_count:int=10,slience=True,waiting_time=0,use_try_catch=False,progress_bar:tqdm=None):
     def run_task(task:Callable,*args, **kwargs):
         if not use_try_catch:
             task(*args, **kwargs)
@@ -78,6 +79,8 @@ def execute_queue(iterator:Iterator,threads_count:int=10,slience=True,waiting_ti
     def start():
         for row in iterator:
             queue.put(row)
+            if progress_bar is not None:
+                progress_bar.update(1)
             time.sleep(waiting_time)
         queue.join()
     return start()
