@@ -22,6 +22,7 @@ class QueueExecutor(list[Queue]):
         if self.threads_count==1:
             for task in self:
                 task[0](**task[1])
+                progress_bar.update(1)
         elif self.threads_count>1:
             execute_queue(self,threads_count=self.threads_count,slience=self.slience,waiting_time=self.waiting_time,use_try_catch=self.use_try_catch,progress_bar=progress_bar)
     pass
