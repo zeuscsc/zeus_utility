@@ -11,9 +11,9 @@ URL = 'https://github.com/zeuscsc/zeus_utility.git'
 EMAIL = 'zeuscsc@gmail.com'
 AUTHOR = 'Zeus Chiu'
 REQUIRES_PYTHON = '>=3.9.0'
-VERSION = '0.0.10'
+VERSION = '0.1.0'
 
-with open('requirements.txt') as f:
+with open('requirements_version.txt') as f:
     required_packages = f.readlines()
     required_packages = [pkg.strip() for pkg in required_packages]
 
