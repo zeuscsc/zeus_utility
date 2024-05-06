@@ -20,3 +20,8 @@ for i in range(10):
     executor.add_task(print_a_plus_b,a=i,b=i)
 executor.execute()
 ```
+
+**Remark**: If you want to use local embeddings model, please install FlagEmbedding
+```shell
+pip install FlagEmbedding
+```
